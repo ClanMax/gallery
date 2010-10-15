@@ -10,6 +10,7 @@ my $db_user_name = 'root'; # login your database
 my $db_password = 'passwords'; # passwords your database
 $db = DBI->connect($dsn, $db_user_name, $db_password) or die "Не удалось подключиться к базе";
 
+print "Content-Type: text/html\n\n";
 # Проверим вошел ли юзер или нет
 $cgi = new CGI;
 $login = $cgi->param('login');
@@ -30,12 +31,13 @@ if ($login && $passwords > 0 ) {
 			my $s = rand(@rnd_txt);
 			$session .= $rnd_txt[$s]
 			}
-		$db->do("UPDATE  `gallery`.`users` SET  `session` =  '$session' WHERE  `users`.`name` = '$login'");
+		$db->do("UPDATE  `gallery`.`users` SET  `session` =  '$session' WHERE  `users`.`name` = 
+'$login'");
 		print '<SCRIPT LANGUAGE="JavaScript">this.document.cookie="session='.$session.
 		        ';path=/;domain=.clanmax.ru;expires=Sunday,31-Dec-19 23:59:59 GMT;";</SCRIPT>
 			<SCRIPT LANGUAGE="JavaScript">this.document.cookie="login='.$login.
 			';path=/;domain=clanmax.ru;expires=Sunday,31-Dec-19 23:59:59 GMT;";</SCRIPT>';
-		print "Location: \n\n";
+		print "Location: index.pl \n\n";
         	}
 	}
 
@@ -50,7 +52,7 @@ if ($cookies{'session'} && $cookies{'login'}) {
 		$cookiesdb->finish();
 	if ($cookiesdb > 0) {
 		if ($cookiesdb eq $cookies{'login'}) {
-			print "Location:  \n\n";
+			print "Location: index.pl \n\n";
 			}
 		else {
 	        login();
@@ -62,11 +64,10 @@ else {
 }
 
 sub login {
-print "Content-Type: text/html\n\n";
 print "
 <html>
 <body>
-<title>Галлерея: вход</title>
+<title>Галерея: вход</title>
 <form name = 'if' method = 'post' action = 'login.pl'>
 <input name = 'login' type = 'text'>
 <br><input name = 'passwords' type = 'password'>

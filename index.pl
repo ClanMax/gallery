@@ -20,13 +20,13 @@ if ($cookies{'session'}) {
 		$cookiesdb->execute(); 
 		$cookiesdb->fetchrow_array;
 
-	if ($cookiesdb = $$cookies{'login'}  ) {
+#	if ($cookiesdb eq $$cookies{'login'}  ) {
 			gallery();
-	}
-	else {
-		print "Location: login.pl \n\n";
-		exit;
-		}
+#	}
+#	else {
+#		print "Location: login.pl \n\n";
+#		exit;
+#		}
 }
 else {
 	print "Location: login.pl\n\n";
@@ -34,7 +34,7 @@ else {
 	}
 
 sub gallery {
-
+print "Content-Type: text/html\n\n";
 print "<html>
 <body>
 <title>В разработке же</title>
@@ -54,4 +54,4 @@ while ($photo->fetch) {
 	    $i=0;
         }
     }  	
-}  
+} 
