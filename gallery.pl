@@ -10,6 +10,7 @@ my $db_user_name = 'root'; # Логин базы данных | Login your datab
 my $db_password = 'password'; # Пароль от базы данных | Password your database 
 my $db = DBI->connect($dsn, $db_user_name, $db_password) || "Не удалось подключиться к базе";
 
+my $md5 = Digest::MD5->new;
 
 get '/login' => sub {
         my $self = shift;
@@ -18,16 +19,17 @@ get '/login' => sub {
 
         my $name = $self->param('name') || '';
         my $pass = $self->param('pass') || '';
+        my $password = $md5->add($pass)->hexdigest;
 
 	##################
 	# Нужно сделать проверку по паролю в md5. Хранить в открытом виде не очень хочется. 
 	##################
 
 	my $check = $db->do("SELECT * FROM `users` WHERE `name` = '$name' AND `password` =
-	'$pass'");
+	'$password'");
         return $self->render unless $check != 0;
 	$self->session(name => $name);
-        $self->flash(message => 'Thanks for logging in!');
+        $self->flash(message => 'Thanks for sign in!');
         $self->redirect_to('index');
     } => 'login';
 
@@ -54,8 +56,13 @@ __DATA__
 @@ layouts/default.html.ep
 <!doctype html><html>
 <head><title>Галерея</title></head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <body><%= content %></body>
 </html>
+
+@@ not_found.html.ep
+% layout 'default';
+I don't know for what need this template, but it need!
 
 @@ login.html.ep
 % layout 'default';
