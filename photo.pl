@@ -28,7 +28,7 @@ NULL, NOW());");
 sub prew {
     $prew = Image::Resize->new("Photo/$photo.jpg");
     $gd = $prew->resize(135, 129);
-    open(PREW, ">/home/vladan/prew/prew$photo.png");
+    open(PREW, ">prew/prew$photo.png");
         print PREW $gd->png();
         close PREW;
   }
