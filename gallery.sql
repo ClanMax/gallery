@@ -59,4 +59,4 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `dateregister`, `lastseen`, `session`) VALUES
-(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2010-10-14 15:49:13', '2010-10-14 15:49:13', '93Y3i5BIV6UZfkrMFBAFz2fX27JoNwei');
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '2010-10-14 15:49:13', '2010-10-14 15:49:13', '93Y3i5BIV6UZfkrMFBAFz2fX27JoNwei');
